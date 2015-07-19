@@ -225,6 +225,15 @@ new_median - old_median
 ### Are there differences in activity patterns between weekdays and weekends?
 1. Create a new factor variable in the dataset with two levels -- "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
 
+*Set time localization*
+
+```r
+Sys.setlocale("LC_TIME", "C")
+```
+
+```
+## [1] "C"
+```
 
 ```r
 head(new_data)
@@ -246,8 +255,8 @@ levels(new_data$weekdays)
 ```
 
 ```
-## [1] "dinsdag"   "donderdag" "maandag"   "vrijdag"   "woensdag"  "zaterdag" 
-## [7] "zondag"
+## [1] "Friday"    "Monday"    "Saturday"  "Sunday"    "Thursday"  "Tuesday"  
+## [7] "Wednesday"
 ```
 
 ```r
@@ -269,7 +278,7 @@ table(new_data$weekdays)
 ```
 ## 
 ## weekday weekend 
-##       0       0
+##   12960    4608
 ```
 
 2. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
@@ -283,9 +292,10 @@ avgSteps <- aggregate(new_data$steps,
 names(avgSteps)[3] <- "meanOfSteps"
 
 library(lattice)
-```
-panel.xyplot(avgSteps$meanOfSteps ~ avgSteps$interval | avgSteps$weekdays, 
+
+xyplot(avgSteps$meanOfSteps ~ avgSteps$interval | avgSteps$weekdays, 
       layout = c(1, 2), type = "l",
       xlab = "Interval", ylab = "Number of steps")
+```
 
-
+![plot of chunk unnamed-chunk-16](figure/unnamed-chunk-16-1.png) 

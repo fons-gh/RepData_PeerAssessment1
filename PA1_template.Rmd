@@ -127,7 +127,9 @@ new_median - old_median
 ### Are there differences in activity patterns between weekdays and weekends?
 1. Create a new factor variable in the dataset with two levels -- "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
 
+*Set time localization*
 ```{r}
+Sys.setlocale("LC_TIME", "C")
 head(new_data)
 new_data$weekdays <- factor(format(new_data$date, "%A"))
 levels(new_data$weekdays)
@@ -150,9 +152,7 @@ names(avgSteps)[3] <- "meanOfSteps"
 
 library(lattice)
 
-```
-panel.xyplot(avgSteps$meanOfSteps ~ avgSteps$interval | avgSteps$weekdays, 
+xyplot(avgSteps$meanOfSteps ~ avgSteps$interval | avgSteps$weekdays, 
       layout = c(1, 2), type = "l",
       xlab = "Interval", ylab = "Number of steps")
-
-
+```
